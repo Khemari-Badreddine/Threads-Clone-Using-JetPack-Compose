@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">ThreadsApp</string>
+    <string name="pfp">pfp</string>
+    <string name="post_example">Lets talk about the incredible power of perseverance and how it can change your life </string>
+    <string name="name_example">Wade</string>
+    <string name="lastname_example">Warren</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Search">Search</string>
+
+</resources>
