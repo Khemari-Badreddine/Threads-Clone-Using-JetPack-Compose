@@ -7,5 +7,29 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Search">Search</string>
+    <string name="followedyou">Followed you</string>
+    <string name="followrequest">Follow Request</string>
+    <string name="follow">Follow</string>
+    <string name="confirm">Confirm</string>
+    <string name="hide">Hide</string>
+    <string name="jones177_jacob">jones177_jacob</string>
+    <string name="back">Back</string>
+    <string name="bio">Adventurer at heart, capturing life\'s moments one photo at a time 📸✨</string>
+    <string name="edit">Edit profile</string>
+    <string name="share">Share profile</string>
+    <string name="newthread">New thread</string>
+    <string name="Login">Log in</string>
+    <string name="usernamepass">Username,email address,or mobile number</string>
+    <string name="password">Password</string>
+    <string name="donthave">Don\'t have an account? Sign Up</string>
+    <string name="label_filters">label_filters</string>
+    <string name="close">close</string>
+    <string name="Signup">Sign up</string>
+    <string name="Firstname">First name</string>
+    <string name="Lastname">Last name</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="have">Have an account? Sign In</string>
+    <string name="para">When faced with challenges, try reframing them as opportunities for growth and learning.</string>
 
 </resources>

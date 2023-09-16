@@ -10,6 +10,20 @@ sealed class NavBarScreen(
     val icon_filled: IconResource
 
 ) {
+
+    object LoginScreen : NavBarScreen(
+        route = "login",
+        title = "Login",
+        icon_outlined = IconResource.fromDrawableResource(R.drawable.feed),
+        icon_filled = IconResource.fromDrawableResource(R.drawable.feed_filled)
+    )
+
+    object SignupScreen : NavBarScreen(
+        route = "Signup",
+        title = "Signup",
+        icon_outlined = IconResource.fromDrawableResource(R.drawable.feed),
+        icon_filled = IconResource.fromDrawableResource(R.drawable.feed_filled)
+    )
     object Home : NavBarScreen(
         route = "home",
         title = "Home",

@@ -1,24 +1,21 @@
 package com.example.threadsapp.Screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,20 +26,26 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
-import com.example.threadsapp.data.NavBarScreen
+import androidx.navigation.NavController
+import com.example.threadsapp.R
+import com.example.threadsapp.items.activityItem
+import com.example.threadsapp.model.activityUser
 import com.example.threadsapp.ui.theme.ThreadsAppTheme
 
+@SuppressLint("MutableCollectionMutableState")
 @Composable
-fun ActivityScreen() {
+fun ActivityScreen(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
+            .padding(vertical = 15.dp)
     ) {
 
         Text(
@@ -50,7 +53,7 @@ fun ActivityScreen() {
             modifier = Modifier
                 .align(Alignment.Start)
                 .offset(15.dp),
-            style = MaterialTheme.typography.titleLarge,
+            style = typography.titleLarge,
             fontWeight = FontWeight.Bold,
             fontSize = 32.sp
 
@@ -61,41 +64,32 @@ fun ActivityScreen() {
             modifier = Modifier
                 .padding(7.dp)
                 .horizontalScroll(state = scrollState)
-                .fillMaxSize()
-
-
         ) {
 
             val cornerRadius = 10.dp
             var selectedIndex by remember { mutableStateOf(0) }
 
-            val itemsList = listOf(
-                "All",
-                "Replies",
-                "Mentions",
-                "Verified",
-
+            val itemsList by remember {
+                mutableStateOf(
+                    listOf(
+                        "All",
+                        "Replies",
+                        "Mentions",
+                        "Verified",
+                    )
                 )
+            }
             itemsList.forEachIndexed { index, item ->
 
                 OutlinedButton(
                     onClick = { selectedIndex = index },
-                    modifier = when (index) {
-                        0 ->
-                            Modifier
-                                .offset(0.dp, 0.dp)
-                                .zIndex(if (selectedIndex == index) 1f else 0f)
-                                .widthIn(100.dp)
-                                .height(36.dp)
-
-                        else ->
-                            Modifier
-                                .offset((10 * index).dp, 0.dp)
-                                .zIndex(if (selectedIndex == index) 1f else 0f)
-                                .widthIn(100.dp)
-                                .height(36.dp)
-
-                    },
+                    modifier = Modifier
+                        .padding(
+                            horizontal = 5.dp
+                        )
+                        .zIndex(if (selectedIndex == index) 1f else 0f)
+                        .widthIn(100.dp)
+                        .height(36.dp),
                     shape =
                     RoundedCornerShape(
                         topStart = cornerRadius,
@@ -107,7 +101,8 @@ fun ActivityScreen() {
                         1.dp,
                         Color.Gray
                     ),
-                    colors = if (selectedIndex == index) {
+                    colors =
+                    if (selectedIndex == index) {
                         ButtonDefaults.outlinedButtonColors(
                             containerColor = Color.Black,
                             contentColor = Color.White
@@ -123,19 +118,72 @@ fun ActivityScreen() {
                     Text(
                         text = item,
                         fontWeight = FontWeight.Bold,
-                        )
+                    )
                 }
             }
         }
 
+        val people by remember {
+            mutableStateOf(
+                mutableListOf(
+                    activityUser(
+                        R.drawable.profilepic,
+                        "wade",
+                        "12s",
+                        1,
+                        true
+                    ),
+                    activityUser(
+                        R.drawable.avatar,
+                        "Pedro",
+                        "6h",
+                        0,
+                        false
+                    ),
+                    activityUser(
+                        R.drawable.avatar,
+                        "ronie",
+                        "16h",
+                        1,
+                        false
+                    ),
+                    activityUser(
+                        R.drawable.profilepic,
+                        "jacki78",
+                        "14min",
+                        0,
+                        true
+                    ),
+                )
+            )
+        }
+
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+
+
+        ) {
+
+            items(people.size) { it ->
+                activityItem(
+                    activityUser = people[it]
+                )
+            }
+        }
+
+
     }
 
+
 }
+
 
 @Composable
 @Preview
 fun ActivityScreenPreview() {
     ThreadsAppTheme {
-        ActivityScreen()
+        ActivityScreen(NavController(LocalContext.current))
     }
 }

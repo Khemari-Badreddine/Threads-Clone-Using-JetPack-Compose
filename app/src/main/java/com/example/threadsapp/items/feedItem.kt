@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -37,11 +38,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.threadsapp.R
 import com.example.threadsapp.data.IconResource
-import com.example.threadsapp.model.Person
+import com.example.threadsapp.model.feedUser
 import com.example.threadsapp.ui.theme.ThreadsAppTheme
 
 @Composable
-fun feedItem(person: Person) {
+fun feedItem(feedUser: feedUser) {
     Row(
         modifier = Modifier
             .height(IntrinsicSize.Min)
@@ -54,7 +55,7 @@ fun feedItem(person: Person) {
         ) {
             val shape = CircleShape
             Image(
-                painter = painterResource(id = person.pfp),
+                painter = painterResource(id = feedUser.pfp),
                 contentDescription = stringResource(id = R.string.pfp),
                 modifier = Modifier
                     .padding(4.dp) // margin
@@ -82,12 +83,26 @@ fun feedItem(person: Person) {
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                Text(
-                    text = person.firstName + " " + person.lastName,
-                    softWrap = false,
-                    style = MaterialTheme.typography.titleMedium,
-                    modifier = Modifier
-                )
+                Row() {
+
+                    Text(
+                        text = feedUser.firstName + " " + feedUser.lastName,
+                        softWrap = false,
+                        style = MaterialTheme.typography.titleMedium,
+                        modifier = Modifier
+                    )
+
+                    if (feedUser.verified) {
+                        Image(
+                            painter = painterResource(id = R.drawable.verified),
+                            contentDescription = stringResource(id = R.string.pfp),
+                            modifier = Modifier
+                                .padding(horizontal = 5.dp)
+                        )
+                    }
+                }
+
+
 
 
                 Text(
@@ -114,24 +129,24 @@ fun feedItem(person: Person) {
             }
 
             Text(
-                text = person.post,
+                text = feedUser.post,
                 modifier = Modifier
                     .weight(1f, false)
                     .padding(0.dp),
                 style = MaterialTheme.typography.bodyLarge,
             )
 
-            if (person.postpic != 0) {
+            if (feedUser.postpic != 0) {
 
                 val shape = RectangleShape
                 Image(
-                    painter = painterResource(id = person.postpic),
+                    painter = painterResource(id = feedUser.postpic),
                     contentDescription = stringResource(id = R.string.pfp),
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
                         .background(Color.White, shape)
-                        .heightIn(250.dp)
-                        .widthIn(338.dp)
+                        .height(250.dp)
+                        .width(338.dp)
                 )
             }
 
@@ -216,7 +231,6 @@ fun FavoriteButton(
             tint =
             if (!isFavorite) Color.Black
             else Color.Red,
-
             modifier = modifier
                 .graphicsLayer {
                     scaleX = 1f
@@ -240,12 +254,13 @@ fun FavoriteButton(
 fun feedItemPreview() {
     ThreadsAppTheme {
         feedItem(
-            person = Person(
+            feedUser = feedUser(
                 R.drawable.avatar,
                 stringResource(R.string.name_example),
                 stringResource(R.string.lastname_example),
                 stringResource(R.string.post_example),
-                R.drawable.postpic
+                R.drawable.postpic,
+                true
             )
         )
     }
